@@ -13,7 +13,7 @@
     <!-- route outlet -->
     <!-- component matched by the route will render here -->
     <router-view></router-view>
-    
+    <Message />
   </div> 
 </template>
 
@@ -105,16 +105,16 @@ const users = [
         "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/hebertialmeida/128.jpg"
     }
 ]
-
+import Message from './components/Message.vue'
 export default {
   name: 'App',
   components: {
-    
+    Message
   },
   data() {
-      this.user = users[0];
-      this.users = users;
-      return this.user;
+      return {
+        users: users
+      }
   }
 }
 

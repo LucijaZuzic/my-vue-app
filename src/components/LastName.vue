@@ -2,7 +2,7 @@
 <div>
     <div>
         <h4>Last Name Search</h4>
-        <input v-model="search_term" v-on:keyup="search(search_term)"/>
+        <input class="search-box" v-model="search_term" v-on:keyup="search(search_term)"/>
     </div>
     <ul class="search-result">
         <li v-for="user in results" :key="user.id">
@@ -17,7 +17,7 @@
 
 <script>
 import { users } from '../App.vue'
-
+import { messages } from './Message.vue'
 
 export default {
   name: 'FirstName',
@@ -25,21 +25,25 @@ export default {
     
   },
   data() {
-      this.search_term = "";
-      this.users = users;
-      this.results = [];
-      return this.users[0];
+      return {
+        search_term: "",
+        results: []
+      }
   },
   methods: {
     goBack() {
         window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/');
     },
     search(search_term) {
-        this.results = this.users.filter(function(user) {return user.last_name.toLowerCase().includes(search_term.toLowerCase());})
+        this.results = users.filter(function(user) {return user.last_name.toLowerCase().includes(search_term.toLowerCase());})
         if (search_term === "") {
             this.results = [];
         }
-        this.$forceUpdate();
+        if (this.results.length === 0) {
+          messages.push("UserService: no users matching "+search_term);
+        } else {
+          messages.push("UserService: found users matching "+search_term);
+        }
     }
   }
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Top 5 users</h3>
+    <h3>Top 5 Users</h3>
     <div class = "grid grid-pad">
         <router-link v-for="user in users.slice(0,5)" v-bind:to="{ name: 'detail', params: { id: user.id }}" :key = "user.id" class="col-1-5">
             <div class="module user">
@@ -8,17 +8,19 @@
             </div>
         </router-link>
     </div>
-    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import { users } from '../App.vue'
+import { messages } from './Message.vue'
 export default {
   name: 'Dashboard',
   data() {
-      this.users = users;
-      return this.users[0];
+      messages.push("UserService: fetched users");
+      return {
+        users: users
+      }
   }
 }
 </script>

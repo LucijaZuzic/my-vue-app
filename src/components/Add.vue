@@ -29,33 +29,34 @@
 
 <script>
 import { users } from '../App.vue'
-
+import { messages } from './Message.vue'
 export default {
   name: 'Add',
   data() {
-      this.user = {
+    return {
+      user: {
         "id": -1,
         "email": "",
         "first_name": "",
         "last_name": "",
         "avatar": ""
       }
-      return this.user;
+    }
   },
   methods: {
     addUser() {	
       if (this.user.first_name !== "" && this.user.last_name !== "" &&  this.user.email !== "" && this.user.avatar !== "") {
         this.user.id = users.length > 0 ? Math.max(...users.map(user => user.id)) + 1 : 11;
         users.push(this.user);
+        messages.push("UserService: added user w/ id="+this.user.id);
       }
-      this.user  = {
+      this.user = {
         "id": -1,
         "email": "",
         "first_name": "",
         "last_name": "",
         "avatar": ""
       };
-      this.$forceUpdate();
     }
   }
 }

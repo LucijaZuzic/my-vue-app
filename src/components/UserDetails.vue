@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div v-if="found === 1">
         <h2>{{user.first_name.toUpperCase()}} {{user.last_name.toUpperCase()}} Details</h2>
-        <div><span>id: {{user.id}}</span></div>
+        <div><span>id: </span>{{user.id}}</div>
         <div>
             <label>first name:
             <input v-model="user.first_name" placeholder="first_name" />
@@ -23,7 +23,7 @@
             </label>
         </div>
         <div>
-            <img v-bind:src=user.avatar alt=avatar />
+            <img v-bind:src=user.avatar v-bind:alt=user.avatar />
         </div>
         <div>
             <button v-on:click="updateUser">save</button>
@@ -39,24 +39,40 @@
 
 <script>
 import { users } from '../App.vue'
-
+import { messages } from './Message.vue'
 export default {
   name: 'UserDetails',
   data() {
     var i;
+    var user;
+    this.found = 0;
     for (i = 0; i < users.length; i++) {
-      if (users[i].id === this.$route.params.id) {
-        this.user = {
+      if (users[i].id.toString() === this.$route.params.id.toString()) {
+        user = {
           "id": users[i].id,
           "email": users[i].email,
           "first_name": users[i].first_name,
           "last_name": users[i].last_name,
           "avatar": users[i].avatar
         }
+        this.found = 1;
+        messages.push("UserService: fetched user id="+users[i].id);
         break;
       }
     }
-    return this.user;
+    if (this.found === 0) {
+      messages.push("UserService: getUser id="+this.$route.params.id+" failed: undefined");
+      user = {
+          "id": -1,
+          "email": "",
+          "first_name": "",
+          "last_name": "",
+          "avatar": ""
+      }
+    }
+    return {
+      user: user
+    }
   },
   methods: {
     goBack() {
@@ -66,6 +82,7 @@ export default {
       var i;
       for (i = 0; i < users.length; i++) {
         if (users[i].id === this.user.id) {
+          messages.push("UserService: deleted user id="+users[i].id);
           users.splice(i, 1);
           break;
         }
@@ -83,10 +100,16 @@ export default {
             "last_name": this.user.last_name,
             "avatar": this.user.avatar
           }
+          messages.push("UserService: updated user id="+users[i].id);
           break;
         }
       }
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/');
+    }
+  },
+  watch: {
+    '$route.params.id': function () {
+      window.location.reload();
     }
   }
 }

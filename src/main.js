@@ -6,7 +6,6 @@ Vue.config.productionTip = false
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-
 Vue.use(VueRouter)
 // 1. Define route components.
 // These can be imported from other files
@@ -32,7 +31,8 @@ const routes = [
   { path: "/user-search-first-name", component: FirstName },
   { path: "/user-search-last-name", component: LastName },
   { path: "/user-search-email", component: Email },
-  { path: "/user-search", component: Search }
+  { path: "/user-search", component: Search },
+  { path: '/', redirect: '/dashboard' }
 ]
 
 // 3. Create the router instance and pass the `routes` option
@@ -41,7 +41,6 @@ const routes = [
 const router = new VueRouter({
   routes // short for `routes: routes`
 })
-
 
 new Vue({
   render: h => h(App),

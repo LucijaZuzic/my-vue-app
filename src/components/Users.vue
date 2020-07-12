@@ -12,22 +12,25 @@
 
 <script>
 import { users } from '../App.vue'
+import { messages } from './Message.vue'
 export default {
   name: 'Users',
   data() {
-      this.users = users;
-      return this.users[0];
+      messages.push("UserService: fetched users");
+      return {
+        users: users
+      }
   },
   methods: {
     deleteUser(id) {	
       var i;
       for (i = 0; i < users.length; i++) {
         if (users[i].id === id) {
+          messages.push("UserService: deleted user id="+users[i].id);
           users.splice(i, 1);
           break;
         }
       }
-      this.$forceUpdate();
     }
   }
 }
