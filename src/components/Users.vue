@@ -3,7 +3,7 @@
     <h2>All Users</h2>
     <ul class = "users">
       <li v-for="user in users" :key = "user.id">
-        <router-link  v-bind:to="{ name: 'detail', params: { id: user.id }}"><span class="badge">{{user.id}}</span> {{user.first_name}} {{user.last_name}}</router-link>
+        <router-link  v-bind:to="{ name: 'detail', params: { id: user.id }}"><span class="badge">{{user.id}}</span> {{user.first_name}} {{user.last_name}} </router-link>
         <button class="delete" title="delete user" v-on:click="deleteUser(user.id)">x</button>
       </li>
     </ul>

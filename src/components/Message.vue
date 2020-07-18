@@ -1,5 +1,5 @@
 <template>
-    <div v-if="messages.length > 0">
+    <div v-if="messages.length">
         <h2>Messages</h2>
         <button class="clear" v-on:click="clear">clear</button>
         <div v-for="(message, index) in messages" :key="index"> {{message}} </div>

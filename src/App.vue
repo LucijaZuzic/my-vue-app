@@ -122,6 +122,7 @@ export { users }
 </script>
 
 <style>
+/* Global Styles */
 h1 {
   color: #369;
   font-family: Arial, Helvetica, sans-serif;

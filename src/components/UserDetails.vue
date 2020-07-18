@@ -1,5 +1,5 @@
 <template>
-    <div v-if="found === 1">
+    <div v-if="user">
         <h2>{{user.first_name.toUpperCase()}} {{user.last_name.toUpperCase()}} Details</h2>
         <div><span>id: </span>{{user.id}}</div>
         <div>
@@ -45,7 +45,6 @@ export default {
   data() {
     var i;
     var user;
-    this.found = 0;
     for (i = 0; i < users.length; i++) {
       if (users[i].id.toString() === this.$route.params.id.toString()) {
         user = {
@@ -54,21 +53,13 @@ export default {
           "first_name": users[i].first_name,
           "last_name": users[i].last_name,
           "avatar": users[i].avatar
-        }
-        this.found = 1;
+        }        
         messages.push("UserService: fetched user id="+users[i].id);
         break;
       }
     }
-    if (this.found === 0) {
+    if (!user) {
       messages.push("UserService: getUser id="+this.$route.params.id+" failed: undefined");
-      user = {
-          "id": -1,
-          "email": "",
-          "first_name": "",
-          "last_name": "",
-          "avatar": ""
-      }
     }
     return {
       user: user
