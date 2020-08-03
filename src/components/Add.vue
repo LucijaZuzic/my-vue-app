@@ -46,7 +46,7 @@ export default {
   methods: {
     addUser() {	
       if (this.user.first_name !== "" && this.user.last_name !== "" &&  this.user.email !== "" && this.user.avatar !== "") {
-        this.user.id = users.length > 0 ? Math.max(...users.map(user => user.id)) + 1 : 11;
+        this.user.id = users.length > 0 ? Math.max(...users.map(user => user.id)) + 1 : 1;
         users.push(this.user);
         messages.push("UserService: added user w/ id="+this.user.id);
       }

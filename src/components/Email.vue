@@ -2,7 +2,7 @@
 <div>
     <div>
         <h4>Email Search</h4>
-        <input class="search-box" v-model="search_term" v-on:keyup="search(search_term)"/>
+        <input class="search-box" v-model="term" v-on:keyup="search(term)"/>
     </div>
     <ul class="search-result">
         <li v-for="user in results" :key="user.id">
@@ -26,7 +26,7 @@ export default {
   },
   data() {
       return {
-        search_term: "",
+        term: "",
         results: []
       }
   },
@@ -34,15 +34,15 @@ export default {
     goBack() {
         window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/');
     },
-    search(search_term) {		   
-        this.results = users.filter(function(user) {return user.email.toLowerCase().includes(search_term.toLowerCase());})
-        if (search_term === "") {
+    search(term) {		   
+        this.results = users.filter(function(user) {return user.email.toLowerCase().includes(term.toLowerCase());})
+        if (term === "") {
             this.results = [];
         }
         if (this.results.length === 0) {
-          messages.push("UserService: no users matching "+search_term);
+          messages.push(`UserService: no users matching "${term}"`);
         } else {
-          messages.push("UserService: found users matching "+search_term);
+          messages.push(`UserService: found users matching "${term}"`);
         }
     }
   }

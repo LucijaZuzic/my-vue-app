@@ -1,6 +1,6 @@
 <template>
     <div v-if="user">
-        <h2>{{user.first_name.toUpperCase()}} {{user.last_name.toUpperCase()}} Details</h2>
+        <h2>{{user.first_name | uppercase}} {{user.last_name.toUpperCase()}} Details</h2>
         <div><span>id: </span>{{user.id}}</div>
         <div>
             <label>first name:
@@ -65,6 +65,11 @@ export default {
       user: user
     }
   },
+  filters: {
+    uppercase: function (value) {
+      return value.toUpperCase()
+    }
+  },
   methods: {
     goBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/');
@@ -98,11 +103,7 @@ export default {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/');
     }
   },
-  watch: {
-    '$route.params.id': function () {
-      window.location.reload();
-    }
-  }
+  watch: {'$route.params.id': function () {window.location.reload();}}
 }
 </script>
 
